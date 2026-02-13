@@ -94,6 +94,37 @@ export default function ProjectsView({
           {project.description}
         </p>
 
+        {/* 成本与计算需求 */}
+        <div className="flex items-center gap-3 mb-3 text-xs">
+          {project.huawei_cloud?.cost_estimation?.small_scale?.monthly_cost && (
+            <div className="flex items-center gap-1 text-gray-700">
+              <span>💰</span>
+              <span className="font-medium">{project.huawei_cloud.cost_estimation.small_scale.monthly_cost}</span>
+              <span className="text-gray-500">/月</span>
+            </div>
+          )}
+          {project.cloud_needs?.compute?.gpu_needed && (
+            <div className="flex items-center gap-1">
+              <span className="px-2 py-0.5 bg-purple-50 text-purple-700 rounded border border-purple-200">
+                🎮 需要GPU
+              </span>
+            </div>
+          )}
+          {project.cloud_needs?.ascend_npu?.compatibility_level && (
+            <div className="flex items-center gap-1">
+              <span className={`px-2 py-0.5 rounded border text-xs ${
+                project.cloud_needs.ascend_npu.compatibility_level === '高'
+                  ? 'bg-green-50 text-green-700 border-green-200'
+                  : project.cloud_needs.ascend_npu.compatibility_level === '中'
+                  ? 'bg-yellow-50 text-yellow-700 border-yellow-200'
+                  : 'bg-red-50 text-red-700 border-red-200'
+              }`}>
+                🔧 昇腾NPU: {project.cloud_needs.ascend_npu.compatibility_level}
+              </span>
+            </div>
+          )}
+        </div>
+
         <div className="flex flex-wrap gap-2">
           {project.categories.tech_approach.slice(0, 2).map((tag: string) => (
             <span

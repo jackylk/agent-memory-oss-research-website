@@ -1,0 +1,7 @@
+请在GitHub创建新仓库：
+仓库名: agent-memory-website
+URL: https://github.com/jackylk/agent-memory-website
+
+然后运行：
+git remote add origin https://github.com/jackylk/agent-memory-website.git
+git push -u origin main
