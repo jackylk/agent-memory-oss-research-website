@@ -511,13 +511,13 @@ export default async function ProjectDetail({ params }: { params: Promise<{ name
 
                 {/* Quick Actions */}
                 <div className="mt-6 flex gap-3">
-                  <button
-                    onClick={() => document.getElementById('cloud-needs-detail')?.scrollIntoView({ behavior: 'smooth' })}
+                  <a
+                    href="#cloud-needs-detail"
                     className="px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition flex items-center gap-2 shadow-sm hover:shadow-md"
                   >
                     <span>查看详细适配方案</span>
                     <span>↓</span>
-                  </button>
+                  </a>
                 </div>
               </div>
             )}
