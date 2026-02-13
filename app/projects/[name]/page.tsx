@@ -427,19 +427,25 @@ export default async function ProjectDetail({ params }: { params: Promise<{ name
                       {project.huawei_cloud.recommended_services?.database?.primary && (
                         <li className="text-gray-700 flex items-start gap-2">
                           <span className="text-green-500 mt-1">•</span>
-                          <span><strong>数据库：</strong>{project.huawei_cloud.recommended_services.database.primary}</span>
+                          <span><strong>数据库：</strong>{typeof project.huawei_cloud.recommended_services.database.primary === 'string'
+                            ? project.huawei_cloud.recommended_services.database.primary
+                            : project.huawei_cloud.recommended_services.database.service || 'RDS PostgreSQL'}</span>
                         </li>
                       )}
-                      {project.huawei_cloud.recommended_services?.cache && project.huawei_cloud.recommended_services.cache !== '无需' && (
+                      {project.huawei_cloud.recommended_services?.cache && (
                         <li className="text-gray-700 flex items-start gap-2">
                           <span className="text-green-500 mt-1">•</span>
-                          <span><strong>缓存：</strong>{project.huawei_cloud.recommended_services.cache}</span>
+                          <span><strong>缓存：</strong>{typeof project.huawei_cloud.recommended_services.cache === 'string'
+                            ? (project.huawei_cloud.recommended_services.cache === '无需' ? '无需' : project.huawei_cloud.recommended_services.cache)
+                            : project.huawei_cloud.recommended_services.cache?.service || 'DCS Redis'}</span>
                         </li>
                       )}
                       {project.huawei_cloud.recommended_services?.compute?.primary && (
                         <li className="text-gray-700 flex items-start gap-2">
                           <span className="text-green-500 mt-1">•</span>
-                          <span><strong>计算：</strong>{project.huawei_cloud.recommended_services.compute.primary}</span>
+                          <span><strong>计算：</strong>{typeof project.huawei_cloud.recommended_services.compute.primary === 'string'
+                            ? project.huawei_cloud.recommended_services.compute.primary
+                            : project.huawei_cloud.recommended_services.compute.service || 'CCE/ECS'}</span>
                         </li>
                       )}
                       {project.cloud_needs?.deployment?.containerized && (
