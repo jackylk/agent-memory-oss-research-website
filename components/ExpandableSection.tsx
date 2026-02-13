@@ -200,7 +200,6 @@ export function ExpandableSection({ title, content, previewLength, sectionPrefix
   const [isExpanded, setIsExpanded] = useState(false);
   const components = createMarkdownComponents(sectionPrefix);
 
-  const preview = content.slice(0, previewLength);
   const shouldShowButton = content.length > previewLength;
 
   return (
@@ -218,13 +217,18 @@ export function ExpandableSection({ title, content, previewLength, sectionPrefix
           </button>
         )}
       </div>
-      <div className="markdown-content">
-        <ReactMarkdown
-          remarkPlugins={[remarkGfm]}
-          components={components}
-        >
-          {isExpanded ? content : preview + (shouldShowButton ? '\n\n...' : '')}
-        </ReactMarkdown>
+      <div className="relative">
+        <div className={`markdown-content transition-all duration-300 ${!isExpanded && shouldShowButton ? 'max-h-[600px] overflow-hidden' : ''}`}>
+          <ReactMarkdown
+            remarkPlugins={[remarkGfm]}
+            components={components}
+          >
+            {content}
+          </ReactMarkdown>
+        </div>
+        {!isExpanded && shouldShowButton && (
+          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent pointer-events-none"></div>
+        )}
       </div>
       {shouldShowButton && (
         <div className="mt-6 pt-4 border-t border-gray-200">
