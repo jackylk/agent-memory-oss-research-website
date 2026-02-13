@@ -3,7 +3,7 @@ import path from 'path';
 import Link from 'next/link';
 
 export default function SummaryPage() {
-  const summaryPath = path.join(process.cwd(), '../data/aggregated/cloud-services-summary.json');
+  const summaryPath = path.join(process.cwd(), 'data/aggregated/cloud-services-summary.json');
   const summary = JSON.parse(fs.readFileSync(summaryPath, 'utf-8'));
 
   return (
