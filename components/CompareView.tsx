@@ -198,18 +198,56 @@ export default function CompareView({ projects }: CompareViewProps) {
                     </td>
                   </tr>
                   <tr>
-                    <td className="px-4 py-3 text-sm font-medium text-gray-700 sticky left-0 bg-white">计算需求</td>
+                    <td className="px-4 py-3 text-sm font-medium text-gray-700 sticky left-0 bg-white">向量存储方案</td>
                     {selectedProjectsData.map(p => (
                       <td key={p.name} className="px-4 py-3 text-sm text-gray-600">
-                        {p.cloud_needs?.compute?.estimated_requirements || 'N/A'}
+                        {p.cloud_needs?.storage_detail?.vector_storage?.solution ||
+                         p.cloud_needs?.storage_detail?.vector_storage?.database ||
+                         'N/A'}
                       </td>
                     ))}
                   </tr>
                   <tr className="bg-gray-50">
-                    <td className="px-4 py-3 text-sm font-medium text-gray-700 sticky left-0 bg-gray-50">需要GPU</td>
+                    <td className="px-4 py-3 text-sm font-medium text-gray-700 sticky left-0 bg-gray-50">主数据库</td>
                     {selectedProjectsData.map(p => (
                       <td key={p.name} className="px-4 py-3 text-sm text-gray-600">
-                        {p.cloud_needs?.compute?.gpu_needed ? '✓ 是' : '✗ 否'}
+                        {p.cloud_needs?.storage_detail?.primary_database?.type ?
+                          `${p.cloud_needs.storage_detail.primary_database.type} ${p.cloud_needs.storage_detail.primary_database.min_version || ''}`.trim() :
+                          'N/A'}
+                      </td>
+                    ))}
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-3 text-sm font-medium text-gray-700 sticky left-0 bg-white">GPU需求</td>
+                    {selectedProjectsData.map(p => (
+                      <td key={p.name} className="px-4 py-3 text-sm text-gray-600">
+                        {p.cloud_needs?.compute_detail?.gpu?.required ? '✓ 必需' :
+                         p.cloud_needs?.compute_detail?.gpu?.recommended ? '○ 推荐' :
+                         '✗ 不需要'}
+                      </td>
+                    ))}
+                  </tr>
+                  <tr className="bg-gray-50">
+                    <td className="px-4 py-3 text-sm font-medium text-gray-700 sticky left-0 bg-gray-50">昇腾NPU兼容性</td>
+                    {selectedProjectsData.map(p => (
+                      <td key={p.name} className="px-4 py-3 text-sm text-gray-600">
+                        <span className={
+                          p.cloud_needs?.ascend_npu?.compatibility_level === '完全兼容' ? 'text-green-700 font-semibold' :
+                          p.cloud_needs?.ascend_npu?.compatibility_level === '容易适配' ? 'text-blue-700' :
+                          p.cloud_needs?.ascend_npu?.compatibility_level === '需要工作量' ? 'text-orange-700' :
+                          p.cloud_needs?.ascend_npu?.compatibility_level === '困难' ? 'text-red-700' :
+                          'text-gray-500'
+                        }>
+                          {p.cloud_needs?.ascend_npu?.compatibility_level || 'N/A'}
+                        </span>
+                      </td>
+                    ))}
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-3 text-sm font-medium text-gray-700 sticky left-0 bg-white">Serverless适配</td>
+                    {selectedProjectsData.map(p => (
+                      <td key={p.name} className="px-4 py-3 text-sm text-gray-600">
+                        {p.cloud_needs?.compute_detail?.serverless?.suitable ? '✓ 适合' : '✗ 不适合'}
                       </td>
                     ))}
                   </tr>
@@ -240,6 +278,44 @@ export default function CompareView({ projects }: CompareViewProps) {
                             </span>
                           ))}
                         </div>
+                      </td>
+                    ))}
+                  </tr>
+
+                  {/* 华为云适配性 */}
+                  <tr className="bg-red-50">
+                    <td colSpan={selectedProjectsData.length + 1} className="px-4 py-2 text-sm font-semibold text-red-900">
+                      🇨🇳 华为云适配性
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-3 text-sm font-medium text-gray-700 sticky left-0 bg-white">适配难度</td>
+                    {selectedProjectsData.map(p => (
+                      <td key={p.name} className="px-4 py-3 text-sm text-gray-600">
+                        <span className={
+                          p.huawei_cloud?.overall_difficulty === '容易' ? 'text-green-700 font-semibold' :
+                          p.huawei_cloud?.overall_difficulty === '中等' ? 'text-orange-700' :
+                          p.huawei_cloud?.overall_difficulty === '困难' ? 'text-red-700' :
+                          'text-gray-500'
+                        }>
+                          {p.huawei_cloud?.overall_difficulty || 'N/A'}
+                        </span>
+                      </td>
+                    ))}
+                  </tr>
+                  <tr className="bg-gray-50">
+                    <td className="px-4 py-3 text-sm font-medium text-gray-700 sticky left-0 bg-gray-50">推荐数据库服务</td>
+                    {selectedProjectsData.map(p => (
+                      <td key={p.name} className="px-4 py-3 text-sm text-gray-600">
+                        {p.huawei_cloud?.recommended_services?.database?.primary || 'N/A'}
+                      </td>
+                    ))}
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-3 text-sm font-medium text-gray-700 sticky left-0 bg-white">小规模成本/月</td>
+                    {selectedProjectsData.map(p => (
+                      <td key={p.name} className="px-4 py-3 text-sm text-gray-600">
+                        {p.huawei_cloud?.cost_estimation?.small_scale?.monthly_cost || 'N/A'}
                       </td>
                     ))}
                   </tr>

@@ -38,6 +38,39 @@ export interface ProjectMeta {
       containerized: boolean;
       orchestration?: string[];
     };
+    // 增强分析字段
+    storage_detail?: {
+      vector_storage?: any;
+      primary_database?: any;
+      graph_database?: any;
+      cache?: any;
+      data_scale?: any;
+      performance?: any;
+    };
+    compute_detail?: {
+      cpu?: any;
+      memory?: any;
+      gpu?: any;
+      scalability?: any;
+      serverless?: any;
+      concurrency?: any;
+    };
+    ascend_npu?: {
+      compatibility_level?: string;
+      framework_analysis?: any;
+      migration?: any;
+      recommendation?: string;
+    };
+    external_services?: any;
+    deployment_detail?: any;
+  };
+  // 华为云适配性
+  huawei_cloud?: {
+    overall_difficulty?: string;
+    recommended_services?: any;
+    cost_estimation?: any;
+    special_requirements?: string[];
+    architecture_recommendations?: string[];
   };
   categories: {
     tech_approach: string[];
