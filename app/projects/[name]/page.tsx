@@ -5,12 +5,20 @@ import fs from 'fs';
 import path from 'path';
 import { ExpandableSection } from '@/components/ExpandableSection';
 import { TableOfContents, type TocSection } from '@/components/TableOfContents';
+import type { Metadata } from 'next';
 
 export async function generateStaticParams() {
   const projects = loadAllProjects();
   return projects.map((project) => ({
     name: project.name,
   }));
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ name: string }> }): Promise<Metadata> {
+  const { name } = await params;
+  return {
+    title: `Agent Memory 研究中心：${name}`,
+  };
 }
 
 function loadProjectMarkdown(projectName: string, filename: string): string | null {
