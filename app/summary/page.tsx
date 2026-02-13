@@ -158,7 +158,7 @@ export default function SummaryPage() {
               };
               return (
                 <div key={key} className="text-center">
-                  <div className="text-2xl font-bold text-blue-600 mb-1">{value}</div>
+                  <div className="text-2xl font-bold text-blue-600 mb-1">{String(value)}</div>
                   <div className="text-xs text-gray-600">{labels[key]}</div>
                 </div>
               );
