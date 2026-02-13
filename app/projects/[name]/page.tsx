@@ -72,6 +72,8 @@ export default async function ProjectDetail({ params }: { params: Promise<{ name
     tocSections.push({ id: 'value-propositions', title: '华为式价值判断', icon: '💎' });
   }
 
+  tocSections.push({ id: 'cloud-needs-summary', title: '华为云适配性', icon: '🇨🇳' });
+
   if (project.paper?.exists) {
     tocSections.push({ id: 'paper', title: '学术论文', icon: '📄' });
   }
@@ -94,8 +96,6 @@ export default async function ProjectDetail({ params }: { params: Promise<{ name
     const archChildren = extractMarkdownHeadings(architecture, 'arch');
     tocSections.push({ id: 'architecture', title: '架构分析', icon: '🏗️', children: archChildren });
   }
-
-  tocSections.push({ id: 'cloud-needs-summary', title: '华为云适配性', icon: '🇨🇳' });
 
   if (cloudNeeds) {
     const cloudChildren = extractMarkdownHeadings(cloudNeeds, 'cloud');
