@@ -21,6 +21,29 @@ export async function generateMetadata({ params }: { params: Promise<{ name: str
   };
 }
 
+function headingToId(prefix: string, text: string): string {
+  const cleaned = text.replace(/[*_`#]/g, '').trim();
+  const slug = cleaned
+    .toLowerCase()
+    .replace(/[^\w\u4e00-\u9fa5]+/g, '-')
+    .replace(/^-|-$/g, '');
+  return `${prefix}-${slug}`;
+}
+
+function extractMarkdownHeadings(content: string, prefix: string): { id: string; title: string }[] {
+  const headings: { id: string; title: string }[] = [];
+  const lines = content.split('\n');
+  for (const line of lines) {
+    const match = line.match(/^##\s+(?:\d+\.\s*)?(.+)/);
+    if (match) {
+      const title = match[1].replace(/[*_`]/g, '').trim();
+      const id = headingToId(prefix, title);
+      headings.push({ id, title });
+    }
+  }
+  return headings;
+}
+
 function loadProjectMarkdown(projectName: string, filename: string): string | null {
   const DATA_DIR = path.join(process.cwd(), '..', 'data');
   const mdPath = path.join(DATA_DIR, 'projects', projectName, filename);
@@ -68,13 +91,15 @@ export default async function ProjectDetail({ params }: { params: Promise<{ name
   tocSections.push({ id: 'tech-stack', title: '技术栈', icon: '🛠️' });
 
   if (architecture) {
-    tocSections.push({ id: 'architecture', title: '架构分析', icon: '🏗️' });
+    const archChildren = extractMarkdownHeadings(architecture, 'arch');
+    tocSections.push({ id: 'architecture', title: '架构分析', icon: '🏗️', children: archChildren });
   }
 
   tocSections.push({ id: 'cloud-needs-summary', title: '云服务需求概览', icon: '☁️' });
 
   if (cloudNeeds) {
-    tocSections.push({ id: 'cloud-needs-detail', title: '云服务需求详情', icon: '💰' });
+    const cloudChildren = extractMarkdownHeadings(cloudNeeds, 'cloud');
+    tocSections.push({ id: 'cloud-needs-detail', title: '云服务需求详情', icon: '💰', children: cloudChildren });
   }
 
   return (
@@ -361,6 +386,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ name
                   title="🏗️ 架构分析"
                   content={architecture}
                   previewLength={800}
+                  sectionPrefix="arch"
                 />
               </div>
             )}
@@ -428,6 +454,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ name
                   title="💰 云服务需求详情"
                   content={cloudNeeds}
                   previewLength={800}
+                  sectionPrefix="cloud"
                 />
               </div>
             )}

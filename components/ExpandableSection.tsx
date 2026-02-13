@@ -11,10 +11,22 @@ interface ExpandableSectionProps {
   title: string;
   content: string;
   previewLength: number;
+  sectionPrefix?: string; // prefix for heading IDs
 }
 
-// 自定义 Markdown 组件以改善样式
-const markdownComponents: Components = {
+// Generate a stable ID from heading text
+function headingToId(prefix: string, text: string): string {
+  const cleaned = text.replace(/[*_`#]/g, '').trim();
+  const slug = cleaned
+    .toLowerCase()
+    .replace(/[^\w\u4e00-\u9fa5]+/g, '-')
+    .replace(/^-|-$/g, '');
+  return `${prefix}-${slug}`;
+}
+
+// Create markdown components with heading IDs
+function createMarkdownComponents(sectionPrefix: string): Components {
+  return {
   // 表格样式
   table: ({ children }) => (
     <div className="overflow-x-auto my-6">
@@ -48,27 +60,39 @@ const markdownComponents: Components = {
       {children}
     </td>
   ),
-  // 标题样式
-  h1: ({ children }) => (
-    <h1 className="text-3xl font-bold text-gray-900 mt-8 mb-4 pb-2 border-b-2 border-gray-200">
-      {children}
-    </h1>
-  ),
-  h2: ({ children }) => (
-    <h2 className="text-2xl font-bold text-gray-900 mt-6 mb-3 pb-2 border-b border-gray-200">
-      {children}
-    </h2>
-  ),
-  h3: ({ children }) => (
-    <h3 className="text-xl font-semibold text-gray-900 mt-5 mb-2">
-      {children}
-    </h3>
-  ),
-  h4: ({ children }) => (
-    <h4 className="text-lg font-semibold text-gray-800 mt-4 mb-2">
-      {children}
-    </h4>
-  ),
+  // 标题样式 - 带ID用于目录导航
+  h1: ({ children }) => {
+    const id = headingToId(sectionPrefix, String(children));
+    return (
+      <h1 id={id} className="text-3xl font-bold text-gray-900 mt-8 mb-4 pb-2 border-b-2 border-gray-200 scroll-mt-24">
+        {children}
+      </h1>
+    );
+  },
+  h2: ({ children }) => {
+    const id = headingToId(sectionPrefix, String(children));
+    return (
+      <h2 id={id} className="text-2xl font-bold text-gray-900 mt-6 mb-3 pb-2 border-b border-gray-200 scroll-mt-24">
+        {children}
+      </h2>
+    );
+  },
+  h3: ({ children }) => {
+    const id = headingToId(sectionPrefix, String(children));
+    return (
+      <h3 id={id} className="text-xl font-semibold text-gray-900 mt-5 mb-2 scroll-mt-24">
+        {children}
+      </h3>
+    );
+  },
+  h4: ({ children }) => {
+    const id = headingToId(sectionPrefix, String(children));
+    return (
+      <h4 id={id} className="text-lg font-semibold text-gray-800 mt-4 mb-2 scroll-mt-24">
+        {children}
+      </h4>
+    );
+  },
   // 段落样式
   p: ({ children }) => (
     <p className="text-gray-900 leading-7 mb-4">
@@ -168,10 +192,12 @@ const markdownComponents: Components = {
       {children}
     </em>
   ),
-};
+  };
+}
 
-export function ExpandableSection({ title, content, previewLength }: ExpandableSectionProps) {
+export function ExpandableSection({ title, content, previewLength, sectionPrefix = 'section' }: ExpandableSectionProps) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const components = createMarkdownComponents(sectionPrefix);
 
   const preview = content.slice(0, previewLength);
   const shouldShowButton = content.length > previewLength;
@@ -194,7 +220,7 @@ export function ExpandableSection({ title, content, previewLength }: ExpandableS
       <div className="markdown-content">
         <ReactMarkdown
           remarkPlugins={[remarkGfm]}
-          components={markdownComponents}
+          components={components}
         >
           {isExpanded ? content : preview + (shouldShowButton ? '\n\n...' : '')}
         </ReactMarkdown>
