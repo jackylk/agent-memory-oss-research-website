@@ -16,7 +16,8 @@ interface ExpandableSectionProps {
 
 // Generate a stable ID from heading text
 function headingToId(prefix: string, text: string): string {
-  const cleaned = text.replace(/[*_`#]/g, '').trim();
+  // Remove markdown formatting and number prefixes (e.g., "1. ", "2. ")
+  const cleaned = text.replace(/[*_`#]/g, '').replace(/^\d+\.\s*/, '').trim();
   const slug = cleaned
     .toLowerCase()
     .replace(/[^\w\u4e00-\u9fa5]+/g, '-')
