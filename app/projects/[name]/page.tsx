@@ -232,6 +232,139 @@ export default async function ProjectDetail({ params }: { params: Promise<{ name
                 </div>
               </div>
             )}
+            {/* Huawei Cloud Adaptability Summary */}
+            {project.huawei_cloud && (
+              <div id="cloud-needs-summary" className="bg-gradient-to-br from-red-50 to-orange-50 rounded-2xl shadow-lg p-8 mb-8 border-2 border-red-200">
+                <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                  <span className="text-3xl">🇨🇳</span>
+                  <span>华为云适配性</span>
+                </h2>
+
+                {/* Adaptability Badge */}
+                <div className="mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white shadow-sm border border-gray-200">
+                  <span className="text-lg">
+                    {project.huawei_cloud.overall_difficulty === '容易' && '🟢'}
+                    {project.huawei_cloud.overall_difficulty === '中等' && '🟡'}
+                    {project.huawei_cloud.overall_difficulty === '困难' && '🔴'}
+                  </span>
+                  <span className="font-semibold text-gray-900">适配性：</span>
+                  <span className={`font-bold ${
+                    project.huawei_cloud.overall_difficulty === '容易' ? 'text-green-600' :
+                    project.huawei_cloud.overall_difficulty === '中等' ? 'text-yellow-600' :
+                    'text-red-600'
+                  }`}>
+                    {project.huawei_cloud.overall_difficulty === '容易' ? '高' :
+                     project.huawei_cloud.overall_difficulty === '中等' ? '中' :
+                     project.huawei_cloud.overall_difficulty === '困难' ? '低' :
+                     project.huawei_cloud.overall_difficulty}
+                  </span>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-6 mb-6">
+                  {/* Supported Services */}
+                  <div className="bg-white rounded-xl p-6 shadow-sm border border-green-100">
+                    <h3 className="font-semibold text-green-700 mb-4 flex items-center gap-2">
+                      <span>✅</span>
+                      <span>华为云完全支持</span>
+                    </h3>
+                    <ul className="space-y-2 text-sm">
+                      {project.huawei_cloud.recommended_services?.database?.primary && (
+                        <li className="text-gray-700 flex items-start gap-2">
+                          <span className="text-green-500 mt-1">•</span>
+                          <span><strong>数据库：</strong>{typeof project.huawei_cloud.recommended_services.database.primary === 'string'
+                            ? project.huawei_cloud.recommended_services.database.primary
+                            : project.huawei_cloud.recommended_services.database.service || 'RDS PostgreSQL'}</span>
+                        </li>
+                      )}
+                      {project.huawei_cloud.recommended_services?.cache && (
+                        <li className="text-gray-700 flex items-start gap-2">
+                          <span className="text-green-500 mt-1">•</span>
+                          <span><strong>缓存：</strong>{typeof project.huawei_cloud.recommended_services.cache === 'string'
+                            ? (project.huawei_cloud.recommended_services.cache === '无需' ? '无需' : project.huawei_cloud.recommended_services.cache)
+                            : project.huawei_cloud.recommended_services.cache?.service || 'DCS Redis'}</span>
+                        </li>
+                      )}
+                      {project.huawei_cloud.recommended_services?.compute?.primary && (
+                        <li className="text-gray-700 flex items-start gap-2">
+                          <span className="text-green-500 mt-1">•</span>
+                          <span><strong>计算：</strong>{typeof project.huawei_cloud.recommended_services.compute.primary === 'string'
+                            ? project.huawei_cloud.recommended_services.compute.primary
+                            : project.huawei_cloud.recommended_services.compute.service || 'CCE/ECS'}</span>
+                        </li>
+                      )}
+                      {project.cloud_needs?.deployment?.containerized && (
+                        <li className="text-gray-700 flex items-start gap-2">
+                          <span className="text-green-500 mt-1">•</span>
+                          <span><strong>容器编排：</strong>CCE (云容器引擎)</span>
+                        </li>
+                      )}
+                    </ul>
+                  </div>
+
+                  {/* Challenges */}
+                  <div className="bg-white rounded-xl p-6 shadow-sm border border-orange-100">
+                    <h3 className="font-semibold text-orange-700 mb-4 flex items-center gap-2">
+                      <span>⚠️</span>
+                      <span>差距与挑战</span>
+                    </h3>
+                    <ul className="space-y-2 text-sm">
+                      {project.huawei_cloud.special_requirements && project.huawei_cloud.special_requirements.length > 0 ? (
+                        project.huawei_cloud.special_requirements.slice(0, 4).map((req, idx) => (
+                          <li key={idx} className="text-gray-700 flex items-start gap-2">
+                            <span className="text-orange-500 mt-1">•</span>
+                            <span>{req}</span>
+                          </li>
+                        ))
+                      ) : (
+                        <li className="text-gray-500 italic">无重大挑战</li>
+                      )}
+                    </ul>
+                  </div>
+                </div>
+
+                {/* Cost Estimation */}
+                {project.huawei_cloud.cost_estimation?.small_scale && (
+                  <div className="bg-white rounded-xl p-6 shadow-sm border border-blue-100">
+                    <h3 className="font-semibold text-blue-700 mb-4 flex items-center gap-2">
+                      <span>💰</span>
+                      <span>成本估算（小规模）</span>
+                    </h3>
+                    <div className="flex items-baseline gap-4 mb-3">
+                      <span className="text-3xl font-bold text-blue-600">
+                        {project.huawei_cloud.cost_estimation.small_scale.monthly_cost}
+                      </span>
+                      <span className="text-sm text-gray-600">
+                        / 月
+                      </span>
+                      <span className="text-xs text-gray-500">
+                        ({project.huawei_cloud.cost_estimation.small_scale.description})
+                      </span>
+                    </div>
+                    {project.huawei_cloud.cost_estimation.small_scale.breakdown && (
+                      <div className="grid grid-cols-2 gap-2 text-xs text-gray-600">
+                        {Object.entries(project.huawei_cloud.cost_estimation.small_scale.breakdown).slice(0, 4).map(([key, value]) => (
+                          <div key={key} className="flex justify-between">
+                            <span>{key}:</span>
+                            <span className="font-medium">{value as string}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* Quick Actions */}
+                <div className="mt-6 flex gap-3">
+                  <a
+                    href="#cloud-needs-detail"
+                    className="px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition flex items-center gap-2 shadow-sm hover:shadow-md"
+                  >
+                    <span>查看详细适配方案</span>
+                    <span>↓</span>
+                  </a>
+                </div>
+              </div>
+            )}
 
             {/* Paper Info */}
             {project.paper?.exists && (
@@ -391,139 +524,6 @@ export default async function ProjectDetail({ params }: { params: Promise<{ name
               </div>
             )}
 
-            {/* Huawei Cloud Adaptability Summary */}
-            {project.huawei_cloud && (
-              <div id="cloud-needs-summary" className="bg-gradient-to-br from-red-50 to-orange-50 rounded-2xl shadow-lg p-8 mb-8 border-2 border-red-200">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-                  <span className="text-3xl">🇨🇳</span>
-                  <span>华为云适配性</span>
-                </h2>
-
-                {/* Adaptability Badge */}
-                <div className="mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white shadow-sm border border-gray-200">
-                  <span className="text-lg">
-                    {project.huawei_cloud.overall_difficulty === '容易' && '🟢'}
-                    {project.huawei_cloud.overall_difficulty === '中等' && '🟡'}
-                    {project.huawei_cloud.overall_difficulty === '困难' && '🔴'}
-                  </span>
-                  <span className="font-semibold text-gray-900">适配性：</span>
-                  <span className={`font-bold ${
-                    project.huawei_cloud.overall_difficulty === '容易' ? 'text-green-600' :
-                    project.huawei_cloud.overall_difficulty === '中等' ? 'text-yellow-600' :
-                    'text-red-600'
-                  }`}>
-                    {project.huawei_cloud.overall_difficulty === '容易' ? '高' :
-                     project.huawei_cloud.overall_difficulty === '中等' ? '中' :
-                     project.huawei_cloud.overall_difficulty === '困难' ? '低' :
-                     project.huawei_cloud.overall_difficulty}
-                  </span>
-                </div>
-
-                <div className="grid md:grid-cols-2 gap-6 mb-6">
-                  {/* Supported Services */}
-                  <div className="bg-white rounded-xl p-6 shadow-sm border border-green-100">
-                    <h3 className="font-semibold text-green-700 mb-4 flex items-center gap-2">
-                      <span>✅</span>
-                      <span>华为云完全支持</span>
-                    </h3>
-                    <ul className="space-y-2 text-sm">
-                      {project.huawei_cloud.recommended_services?.database?.primary && (
-                        <li className="text-gray-700 flex items-start gap-2">
-                          <span className="text-green-500 mt-1">•</span>
-                          <span><strong>数据库：</strong>{typeof project.huawei_cloud.recommended_services.database.primary === 'string'
-                            ? project.huawei_cloud.recommended_services.database.primary
-                            : project.huawei_cloud.recommended_services.database.service || 'RDS PostgreSQL'}</span>
-                        </li>
-                      )}
-                      {project.huawei_cloud.recommended_services?.cache && (
-                        <li className="text-gray-700 flex items-start gap-2">
-                          <span className="text-green-500 mt-1">•</span>
-                          <span><strong>缓存：</strong>{typeof project.huawei_cloud.recommended_services.cache === 'string'
-                            ? (project.huawei_cloud.recommended_services.cache === '无需' ? '无需' : project.huawei_cloud.recommended_services.cache)
-                            : project.huawei_cloud.recommended_services.cache?.service || 'DCS Redis'}</span>
-                        </li>
-                      )}
-                      {project.huawei_cloud.recommended_services?.compute?.primary && (
-                        <li className="text-gray-700 flex items-start gap-2">
-                          <span className="text-green-500 mt-1">•</span>
-                          <span><strong>计算：</strong>{typeof project.huawei_cloud.recommended_services.compute.primary === 'string'
-                            ? project.huawei_cloud.recommended_services.compute.primary
-                            : project.huawei_cloud.recommended_services.compute.service || 'CCE/ECS'}</span>
-                        </li>
-                      )}
-                      {project.cloud_needs?.deployment?.containerized && (
-                        <li className="text-gray-700 flex items-start gap-2">
-                          <span className="text-green-500 mt-1">•</span>
-                          <span><strong>容器编排：</strong>CCE (云容器引擎)</span>
-                        </li>
-                      )}
-                    </ul>
-                  </div>
-
-                  {/* Challenges */}
-                  <div className="bg-white rounded-xl p-6 shadow-sm border border-orange-100">
-                    <h3 className="font-semibold text-orange-700 mb-4 flex items-center gap-2">
-                      <span>⚠️</span>
-                      <span>差距与挑战</span>
-                    </h3>
-                    <ul className="space-y-2 text-sm">
-                      {project.huawei_cloud.special_requirements && project.huawei_cloud.special_requirements.length > 0 ? (
-                        project.huawei_cloud.special_requirements.slice(0, 4).map((req, idx) => (
-                          <li key={idx} className="text-gray-700 flex items-start gap-2">
-                            <span className="text-orange-500 mt-1">•</span>
-                            <span>{req}</span>
-                          </li>
-                        ))
-                      ) : (
-                        <li className="text-gray-500 italic">无重大挑战</li>
-                      )}
-                    </ul>
-                  </div>
-                </div>
-
-                {/* Cost Estimation */}
-                {project.huawei_cloud.cost_estimation?.small_scale && (
-                  <div className="bg-white rounded-xl p-6 shadow-sm border border-blue-100">
-                    <h3 className="font-semibold text-blue-700 mb-4 flex items-center gap-2">
-                      <span>💰</span>
-                      <span>成本估算（小规模）</span>
-                    </h3>
-                    <div className="flex items-baseline gap-4 mb-3">
-                      <span className="text-3xl font-bold text-blue-600">
-                        {project.huawei_cloud.cost_estimation.small_scale.monthly_cost}
-                      </span>
-                      <span className="text-sm text-gray-600">
-                        / 月
-                      </span>
-                      <span className="text-xs text-gray-500">
-                        ({project.huawei_cloud.cost_estimation.small_scale.description})
-                      </span>
-                    </div>
-                    {project.huawei_cloud.cost_estimation.small_scale.breakdown && (
-                      <div className="grid grid-cols-2 gap-2 text-xs text-gray-600">
-                        {Object.entries(project.huawei_cloud.cost_estimation.small_scale.breakdown).slice(0, 4).map(([key, value]) => (
-                          <div key={key} className="flex justify-between">
-                            <span>{key}:</span>
-                            <span className="font-medium">{value as string}</span>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                )}
-
-                {/* Quick Actions */}
-                <div className="mt-6 flex gap-3">
-                  <a
-                    href="#cloud-needs-detail"
-                    className="px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition flex items-center gap-2 shadow-sm hover:shadow-md"
-                  >
-                    <span>查看详细适配方案</span>
-                    <span>↓</span>
-                  </a>
-                </div>
-              </div>
-            )}
 
             {/* Cloud Needs */}
             {cloudNeeds && (
