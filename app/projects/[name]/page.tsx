@@ -37,6 +37,10 @@ export default async function ProjectDetail({ params }: { params: Promise<{ name
     { id: 'overview', title: '项目概览', icon: '📊' },
   ];
 
+  if (project.value_propositions && project.value_propositions.length > 0) {
+    tocSections.push({ id: 'value-propositions', title: '华为式价值判断', icon: '💎' });
+  }
+
   if (project.paper?.exists) {
     tocSections.push({ id: 'paper', title: '学术论文', icon: '📄' });
   }
@@ -168,6 +172,33 @@ export default async function ProjectDetail({ params }: { params: Promise<{ name
             )}
           </div>
         </div>
+
+            {/* Value Propositions - 华为式价值判断 */}
+            {project.value_propositions && project.value_propositions.length > 0 && (
+              <div id="value-propositions" className="bg-gradient-to-br from-purple-50 to-blue-50 rounded-2xl shadow-lg p-8 mb-8 border-2 border-purple-200">
+                <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                  <span className="text-3xl">💎</span>
+                  <span>华为式价值判断</span>
+                </h2>
+                <div className="space-y-6">
+                  {project.value_propositions.map((vp: any, index: number) => (
+                    <div key={index} className="bg-white rounded-xl p-6 shadow-sm border border-purple-100">
+                      <div className="flex items-start gap-3 mb-3">
+                        <div className="flex-shrink-0 w-8 h-8 bg-gradient-to-br from-purple-500 to-blue-500 rounded-full flex items-center justify-center text-white font-bold">
+                          {index + 1}
+                        </div>
+                        <h3 className="text-lg font-bold text-purple-900 flex-1">
+                          {vp.name}
+                        </h3>
+                      </div>
+                      <p className="text-gray-700 leading-relaxed ml-11">
+                        {vp.description}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Paper Info */}
             {project.paper?.exists && (
