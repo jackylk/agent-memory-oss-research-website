@@ -123,7 +123,7 @@ function createMarkdownComponents(sectionPrefix: string): Components {
     </pre>
   ),
   // 代码样式
-  code: ({ inline, children, className }) => {
+  code: ({ inline, children, className }: any) => {
     // 检测是否是 Mermaid 图表或架构图
     const match = /language-(\w+)/.exec(className || '');
     const language = match ? match[1] : '';
