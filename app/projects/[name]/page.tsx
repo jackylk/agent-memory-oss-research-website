@@ -45,7 +45,7 @@ function extractMarkdownHeadings(content: string, prefix: string): { id: string;
 }
 
 function loadProjectMarkdown(projectName: string, filename: string): string | null {
-  const DATA_DIR = path.join(process.cwd(), '..', 'data');
+  const DATA_DIR = path.join(process.cwd(), 'data');
   const mdPath = path.join(DATA_DIR, 'projects', projectName, filename);
 
   if (!fs.existsSync(mdPath)) return null;

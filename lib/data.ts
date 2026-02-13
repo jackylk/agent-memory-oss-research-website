@@ -91,7 +91,7 @@ export interface ProjectMeta {
   }>;
 }
 
-const DATA_DIR = path.join(process.cwd(), '..', 'data');
+const DATA_DIR = path.join(process.cwd(), 'data');
 const PROJECTS_DIR = path.join(DATA_DIR, 'projects');
 const AGGREGATED_DIR = path.join(DATA_DIR, 'aggregated');
 
