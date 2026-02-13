@@ -34,58 +34,84 @@ export default function ProjectsView({
 }: ProjectsViewProps) {
 
   // 渲染项目卡片
-  const ProjectCard = ({ project, index, badge }: { project: ProjectMeta; index?: number; badge?: string }) => (
-    <Link
-      href={`/projects/${project.name}`}
-      className="bg-white rounded-xl shadow-sm p-6 border border-gray-100 hover:shadow-lg hover:border-blue-200 transition-all cursor-pointer group"
-    >
-      <div className="flex items-start justify-between mb-3">
-        <div className="flex items-center gap-3 flex-1">
-          {index !== undefined && (
-            <div className="text-2xl font-bold text-gray-300 group-hover:text-blue-400 transition">
-              #{index + 1}
-            </div>
-          )}
-          <div className="flex-1">
-            <h4 className="text-xl font-semibold text-gray-900 group-hover:text-blue-600 transition">
-              {project.name}
-            </h4>
-            <div className="flex items-center gap-2 mt-1">
-              <span className="text-yellow-500">⭐</span>
-              <span className="text-sm font-medium text-gray-700">
-                {project.stars >= 1000 ? `${(project.stars / 1000).toFixed(1)}K` : project.stars}
-              </span>
-              {badge && (
-                <span className="ml-2 px-2 py-0.5 bg-blue-100 text-blue-700 rounded text-xs font-medium">
-                  {badge}
+  const ProjectCard = ({ project, index, badge }: { project: ProjectMeta; index?: number; badge?: string }) => {
+    // 获取华为云适配度
+    const getHuaweiCloudAdaptability = () => {
+      if (!project.huawei_cloud?.overall_difficulty) return null;
+
+      const difficulty = project.huawei_cloud.overall_difficulty;
+
+      // 将"难度"转换为"适配性"（容易→高，中等→中，困难→低）
+      const adaptabilityMap: Record<string, { level: string; color: string; bgColor: string; icon: string }> = {
+        '容易': { level: '高', color: 'text-green-700', bgColor: 'bg-green-50 border-green-200', icon: '🟢' },
+        '中等': { level: '中', color: 'text-yellow-700', bgColor: 'bg-yellow-50 border-yellow-200', icon: '🟡' },
+        '困难': { level: '低', color: 'text-red-700', bgColor: 'bg-red-50 border-red-200', icon: '🔴' },
+      };
+
+      return adaptabilityMap[difficulty] || null;
+    };
+
+    const adaptability = getHuaweiCloudAdaptability();
+
+    return (
+      <Link
+        href={`/projects/${project.name}`}
+        className="bg-white rounded-xl shadow-sm p-6 border border-gray-100 hover:shadow-lg hover:border-blue-200 transition-all cursor-pointer group"
+      >
+        <div className="flex items-start justify-between mb-3">
+          <div className="flex items-center gap-3 flex-1">
+            {index !== undefined && (
+              <div className="text-2xl font-bold text-gray-300 group-hover:text-blue-400 transition">
+                #{index + 1}
+              </div>
+            )}
+            <div className="flex-1">
+              <h4 className="text-xl font-semibold text-gray-900 group-hover:text-blue-600 transition">
+                {project.name}
+              </h4>
+              <div className="flex items-center gap-2 mt-1 flex-wrap">
+                <span className="text-yellow-500">⭐</span>
+                <span className="text-sm font-medium text-gray-700">
+                  {project.stars >= 1000 ? `${(project.stars / 1000).toFixed(1)}K` : project.stars}
                 </span>
-              )}
+                {badge && (
+                  <span className="ml-2 px-2 py-0.5 bg-blue-100 text-blue-700 rounded text-xs font-medium">
+                    {badge}
+                  </span>
+                )}
+                {adaptability && (
+                  <span className={`ml-1 px-2 py-0.5 ${adaptability.bgColor} ${adaptability.color} rounded text-xs font-medium border flex items-center gap-1`}>
+                    <span className="text-xs">{adaptability.icon}</span>
+                    <span>华为云适配性: {adaptability.level}</span>
+                  </span>
+                )}
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <p className="text-gray-600 text-sm mb-4 line-clamp-2">
-        {project.description}
-      </p>
+        <p className="text-gray-600 text-sm mb-4 line-clamp-2">
+          {project.description}
+        </p>
 
-      <div className="flex flex-wrap gap-2">
-        {project.categories.tech_approach.slice(0, 2).map((tag: string) => (
-          <span
-            key={tag}
-            className="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-xs font-medium"
-          >
-            {tag}
-          </span>
-        ))}
-        {project.paper?.exists && (
-          <span className="px-2 py-1 bg-green-50 text-green-700 rounded text-xs">
-            📄 有论文
-          </span>
-        )}
-      </div>
-    </Link>
-  );
+        <div className="flex flex-wrap gap-2">
+          {project.categories.tech_approach.slice(0, 2).map((tag: string) => (
+            <span
+              key={tag}
+              className="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-xs font-medium"
+            >
+              {tag}
+            </span>
+          ))}
+          {project.paper?.exists && (
+            <span className="px-2 py-1 bg-green-50 text-green-700 rounded text-xs">
+              📄 有论文
+            </span>
+          )}
+        </div>
+      </Link>
+    );
+  };
 
   return (
     <>
