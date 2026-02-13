@@ -79,12 +79,6 @@ export default function ProjectsView({
                     {badge}
                   </span>
                 )}
-                {adaptability && (
-                  <span className={`ml-1 px-2 py-0.5 ${adaptability.bgColor} ${adaptability.color} rounded text-xs font-medium border flex items-center gap-1`}>
-                    <span className="text-xs">{adaptability.icon}</span>
-                    <span>华为云适配性: {adaptability.level}</span>
-                  </span>
-                )}
               </div>
             </div>
           </div>
@@ -94,38 +88,7 @@ export default function ProjectsView({
           {project.description}
         </p>
 
-        {/* 成本与计算需求 */}
-        <div className="flex items-center gap-3 mb-3 text-xs">
-          {project.huawei_cloud?.cost_estimation?.small_scale?.monthly_cost && (
-            <div className="flex items-center gap-1 text-gray-700">
-              <span>💰</span>
-              <span className="font-medium">{project.huawei_cloud.cost_estimation.small_scale.monthly_cost}</span>
-              <span className="text-gray-500">/月</span>
-            </div>
-          )}
-          {project.cloud_needs?.compute?.gpu_needed && (
-            <div className="flex items-center gap-1">
-              <span className="px-2 py-0.5 bg-purple-50 text-purple-700 rounded border border-purple-200">
-                🎮 需要GPU
-              </span>
-            </div>
-          )}
-          {project.cloud_needs?.ascend_npu?.compatibility_level && (
-            <div className="flex items-center gap-1">
-              <span className={`px-2 py-0.5 rounded border text-xs ${
-                project.cloud_needs.ascend_npu.compatibility_level === '高'
-                  ? 'bg-green-50 text-green-700 border-green-200'
-                  : project.cloud_needs.ascend_npu.compatibility_level === '中'
-                  ? 'bg-yellow-50 text-yellow-700 border-yellow-200'
-                  : 'bg-red-50 text-red-700 border-red-200'
-              }`}>
-                🔧 昇腾NPU: {project.cloud_needs.ascend_npu.compatibility_level}
-              </span>
-            </div>
-          )}
-        </div>
-
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2 mb-3">
           {project.categories.tech_approach.slice(0, 2).map((tag: string) => (
             <span
               key={tag}
@@ -137,6 +100,32 @@ export default function ProjectsView({
           {project.paper?.exists && (
             <span className="px-2 py-1 bg-green-50 text-green-700 rounded text-xs">
               📄 有论文
+            </span>
+          )}
+          {project.cloud_needs?.compute?.gpu_needed && (
+            <span className="px-2 py-1 bg-purple-50 text-purple-700 rounded border border-purple-200 text-xs">
+              🎮 需要GPU
+            </span>
+          )}
+        </div>
+
+        {/* 华为云适配信息 */}
+        <div className="flex items-center gap-2 pt-3 border-t border-gray-100 flex-wrap">
+          {adaptability && (
+            <span className={`px-2 py-1 ${adaptability.bgColor} ${adaptability.color} rounded text-xs font-medium border flex items-center gap-1`}>
+              <span className="text-xs">{adaptability.icon}</span>
+              <span>华为云适配度: {adaptability.level}</span>
+            </span>
+          )}
+          {project.cloud_needs?.ascend_npu?.compatibility_level && (
+            <span className={`px-2 py-1 rounded border text-xs flex items-center gap-1 ${
+              project.cloud_needs.ascend_npu.compatibility_level === '高'
+                ? 'bg-green-50 text-green-700 border-green-200'
+                : project.cloud_needs.ascend_npu.compatibility_level === '中'
+                ? 'bg-yellow-50 text-yellow-700 border-yellow-200'
+                : 'bg-red-50 text-red-700 border-red-200'
+            }`}>
+              🔧 昇腾NPU: {project.cloud_needs.ascend_npu.compatibility_level}
             </span>
           )}
         </div>
