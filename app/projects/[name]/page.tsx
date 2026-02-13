@@ -95,7 +95,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ name
     tocSections.push({ id: 'architecture', title: '架构分析', icon: '🏗️', children: archChildren });
   }
 
-  tocSections.push({ id: 'cloud-needs-summary', title: '云服务需求概览', icon: '☁️' });
+  tocSections.push({ id: 'cloud-needs-summary', title: '华为云适配性', icon: '🇨🇳' });
 
   if (cloudNeeds) {
     const cloudChildren = extractMarkdownHeadings(cloudNeeds, 'cloud');
@@ -396,23 +396,26 @@ export default async function ProjectDetail({ params }: { params: Promise<{ name
               <div id="cloud-needs-summary" className="bg-gradient-to-br from-red-50 to-orange-50 rounded-2xl shadow-lg p-8 mb-8 border-2 border-red-200">
                 <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
                   <span className="text-3xl">🇨🇳</span>
-                  <span>华为云适配性概览</span>
+                  <span>华为云适配性</span>
                 </h2>
 
-                {/* Difficulty Badge */}
+                {/* Adaptability Badge */}
                 <div className="mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white shadow-sm border border-gray-200">
                   <span className="text-lg">
                     {project.huawei_cloud.overall_difficulty === '容易' && '🟢'}
                     {project.huawei_cloud.overall_difficulty === '中等' && '🟡'}
                     {project.huawei_cloud.overall_difficulty === '困难' && '🔴'}
                   </span>
-                  <span className="font-semibold text-gray-900">适配难度：</span>
+                  <span className="font-semibold text-gray-900">适配性：</span>
                   <span className={`font-bold ${
                     project.huawei_cloud.overall_difficulty === '容易' ? 'text-green-600' :
                     project.huawei_cloud.overall_difficulty === '中等' ? 'text-yellow-600' :
                     'text-red-600'
                   }`}>
-                    {project.huawei_cloud.overall_difficulty}
+                    {project.huawei_cloud.overall_difficulty === '容易' ? '高' :
+                     project.huawei_cloud.overall_difficulty === '中等' ? '中' :
+                     project.huawei_cloud.overall_difficulty === '困难' ? '低' :
+                     project.huawei_cloud.overall_difficulty}
                   </span>
                 </div>
 
