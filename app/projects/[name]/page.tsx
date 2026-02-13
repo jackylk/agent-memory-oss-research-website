@@ -260,6 +260,78 @@ export default async function ProjectDetail({ params }: { params: Promise<{ name
                   </span>
                 </div>
 
+                {/* Core Requirements */}
+                {project.cloud_needs && (
+                  <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200 mb-6">
+                    <h3 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                      <span>📋</span>
+                      <span>项目核心需求</span>
+                    </h3>
+                    <div className="grid md:grid-cols-3 gap-4 text-sm">
+                      {/* Storage Requirements */}
+                      {project.cloud_needs.storage?.types && (
+                        <div>
+                          <h4 className="font-semibold text-gray-700 mb-2">存储服务</h4>
+                          <ul className="space-y-1">
+                            {project.cloud_needs.storage.types.map((type: string, idx: number) => (
+                              <li key={idx} className="text-gray-600 flex items-start gap-1">
+                                <span className="text-gray-400">•</span>
+                                <span>{type}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+
+                      {/* Compute Requirements */}
+                      {project.cloud_needs.compute && (
+                        <div>
+                          <h4 className="font-semibold text-gray-700 mb-2">计算资源</h4>
+                          <ul className="space-y-1">
+                            {project.cloud_needs.compute.estimated_requirements && (
+                              <li className="text-gray-600 flex items-start gap-1">
+                                <span className="text-gray-400">•</span>
+                                <span>{project.cloud_needs.compute.estimated_requirements}</span>
+                              </li>
+                            )}
+                            {project.cloud_needs.compute.gpu_needed && (
+                              <li className="text-gray-600 flex items-start gap-1">
+                                <span className="text-gray-400">•</span>
+                                <span>GPU/NPU 加速支持</span>
+                              </li>
+                            )}
+                            {project.cloud_needs.compute.embedding && (
+                              <li className="text-gray-600 flex items-start gap-1">
+                                <span className="text-gray-400">•</span>
+                                <span>嵌入模型推理</span>
+                              </li>
+                            )}
+                          </ul>
+                        </div>
+                      )}
+
+                      {/* Deployment Requirements */}
+                      {project.cloud_needs.deployment?.orchestration && (
+                        <div>
+                          <h4 className="font-semibold text-gray-700 mb-2">部署方式</h4>
+                          <ul className="space-y-1">
+                            {project.cloud_needs.deployment.orchestration.map((orch: string, idx: number) => (
+                              <li key={idx} className="text-gray-600 flex items-start gap-1">
+                                <span className="text-gray-400">•</span>
+                                <span>{orch}</span>
+                              </li>
+                            ))}
+                            <li className="text-gray-600 flex items-start gap-1">
+                              <span className="text-gray-400">•</span>
+                              <span>部署复杂度: {project.cloud_needs.deployment.complexity}/10</span>
+                            </li>
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+
                 <div className="grid md:grid-cols-2 gap-6 mb-6">
                   {/* Supported Services */}
                   <div className="bg-white rounded-xl p-6 shadow-sm border border-green-100">
