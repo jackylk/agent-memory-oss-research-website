@@ -1,10 +1,26 @@
+'use client';
+
 import fs from 'fs';
 import path from 'path';
 import Link from 'next/link';
+import { useState } from 'react';
 
-export default function SummaryPage() {
-  const summaryPath = path.join(process.cwd(), 'data/aggregated/cloud-services-summary.json');
-  const summary = JSON.parse(fs.readFileSync(summaryPath, 'utf-8'));
+interface SummaryPageProps {
+  summary: any;
+}
+
+function SummaryPageClient({ summary }: SummaryPageProps) {
+  const [expandedServices, setExpandedServices] = useState<Set<string>>(new Set());
+
+  const toggleService = (serviceKey: string) => {
+    const newExpanded = new Set(expandedServices);
+    if (newExpanded.has(serviceKey)) {
+      newExpanded.delete(serviceKey);
+    } else {
+      newExpanded.add(serviceKey);
+    }
+    setExpandedServices(newExpanded);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-slate-100">
@@ -92,22 +108,45 @@ export default function SummaryPage() {
           <div className="bg-white rounded-xl p-6 shadow-sm mb-6">
             <h4 className="text-lg font-semibold text-gray-900 mb-4">🎯 向量数据库</h4>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
-              {summary.storage_services.vector_databases.services.slice(0, 9).map((service: any) => (
-                <div key={service.name} className="border rounded-lg p-3">
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="font-medium text-gray-900">{service.name}</span>
-                    <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded">{service.count}</span>
-                  </div>
-                  <div className="text-xs text-gray-600">
-                    用途: {service.memory_types.join(', ')}
-                  </div>
-                  {service.avg_dimension > 0 && (
-                    <div className="text-xs text-gray-500 mt-1">
-                      平均维度: {service.avg_dimension}
+              {summary.storage_services.vector_databases.services.slice(0, 12).map((service: any) => {
+                const serviceKey = `vector-${service.name}`;
+                const isExpanded = expandedServices.has(serviceKey);
+                return (
+                  <div
+                    key={service.name}
+                    className="border rounded-lg p-3 cursor-pointer hover:border-blue-300 hover:shadow-md transition-all"
+                    onClick={() => toggleService(serviceKey)}
+                  >
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="font-medium text-gray-900">{service.name}</span>
+                      <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded">{service.count}</span>
                     </div>
-                  )}
-                </div>
-              ))}
+                    <div className="text-xs text-gray-600">
+                      用途: {service.memory_types.join(', ')}
+                    </div>
+                    {service.avg_dimension > 0 && (
+                      <div className="text-xs text-gray-500 mt-1">
+                        平均维度: {service.avg_dimension}
+                      </div>
+                    )}
+                    {isExpanded && (
+                      <div className="mt-2 pt-2 border-t border-gray-200">
+                        <div className="text-xs text-gray-600 mb-1">使用项目：</div>
+                        <div className="flex flex-wrap gap-1">
+                          {service.projects.map((proj: string) => (
+                            <span key={proj} className="text-xs bg-gray-100 text-gray-700 px-2 py-0.5 rounded">
+                              {proj}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    <div className="text-xs text-gray-400 mt-1 text-right">
+                      {isExpanded ? '点击收起 ▲' : '点击查看项目 ▼'}
+                    </div>
+                  </div>
+                );
+              })}
             </div>
             <div className="mt-4 p-4 bg-yellow-50 rounded-lg border border-yellow-200">
               <div className="font-medium text-gray-900 mb-1">
@@ -448,4 +487,12 @@ export default function SummaryPage() {
       </div>
     </div>
   );
+}
+
+
+export default function SummaryPage() {
+  const summaryPath = path.join(process.cwd(), 'data/aggregated/cloud-services-summary.json');
+  const summary = JSON.parse(fs.readFileSync(summaryPath, 'utf-8'));
+
+  return <SummaryPageClient summary={summary} />;
 }
