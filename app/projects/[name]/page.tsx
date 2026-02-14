@@ -126,11 +126,11 @@ export default async function ProjectDetail({ params }: { params: Promise<{ name
 
       <div className="max-w-7xl mx-auto px-4 py-12">
         <div className="flex gap-8">
-          {/* 左侧目录导航 */}
+          {/* 侧边目录导航 */}
           <TableOfContents sections={tocSections} />
 
           {/* 主内容区域 */}
-          <div className="flex-1 min-w-0">
+          <div className="flex-1 max-w-5xl">
             {/* Project Header */}
             <div id="overview" className="bg-white rounded-2xl shadow-lg p-8 mb-8 border border-gray-100">
           <div className="flex items-start justify-between mb-6">

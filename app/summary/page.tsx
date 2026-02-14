@@ -3,28 +3,29 @@ import path from 'path';
 import { marked } from 'marked';
 import SummaryPageClient from './SummaryPageClient';
 
-// 提取markdown中的标题作为子章节
-function extractMarkdownHeadings(content: string, prefix: string): { id: string; label: string }[] {
-  const headings: { id: string; label: string }[] = [];
-  const lines = content.split('\n');
+// Configure marked to generate IDs for headings
+function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^\w\u4e00-\u9fa5]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
 
-  for (const line of lines) {
-    // 匹配 ## 标题（二级标题）
-    const match = line.match(/^##\s+(?:\d+\.\s*)?(.+)/);
-    if (match) {
-      const title = match[1].replace(/[*_`]/g, '').trim();
-      // 生成ID
-      const slug = title
-        .toLowerCase()
-        .replace(/[^\w\u4e00-\u9fa5\s]+/g, '')
-        .replace(/\s+/g, '-')
-        .replace(/^-|-$/g, '');
-      const id = `${prefix}-${slug}`;
-      headings.push({ id, label: title });
+marked.use({
+  renderer: {
+    heading({ tokens, depth }) {
+      const text = this.parser.parseInline(tokens);
+      const id = slugify(text);
+      return `<h${depth} id="${id}">${text}</h${depth}>`;
     }
   }
+});
 
-  return headings;
+// Add prefix to all heading IDs in HTML
+function addPrefixToHeadingIds(html: string, prefix: string): string {
+  return html.replace(/<h(\d) id="([^"]+)"/g, (match, level, id) => {
+    return `<h${level} id="${prefix}${id}"`;
+  });
 }
 
 export default function SummaryPage() {
@@ -39,20 +40,18 @@ export default function SummaryPage() {
   const academicTrendsMarkdown = fs.readFileSync(academicTrendsPath, 'utf-8');
 
   // 解析markdown to HTML
-  const githubTrendsHtml = marked.parse(githubTrendsMarkdown) as string;
-  const academicTrendsHtml = marked.parse(academicTrendsMarkdown) as string;
+  let githubTrendsHtml = marked.parse(githubTrendsMarkdown) as string;
+  let academicTrendsHtml = marked.parse(academicTrendsMarkdown) as string;
 
-  // 提取子章节
-  const githubSections = extractMarkdownHeadings(githubTrendsMarkdown, 'future');
-  const academicSections = extractMarkdownHeadings(academicTrendsMarkdown, 'academic');
+  // 添加前缀避免ID冲突
+  githubTrendsHtml = addPrefixToHeadingIds(githubTrendsHtml, 'github-');
+  academicTrendsHtml = addPrefixToHeadingIds(academicTrendsHtml, 'academic-');
 
   return (
     <SummaryPageClient
       summary={summary}
       githubTrends={githubTrendsHtml}
       academicTrends={academicTrendsHtml}
-      githubSections={githubSections}
-      academicSections={academicSections}
     />
   );
 }
