@@ -50,11 +50,11 @@ export default function SummaryPageClient({ summary, githubTrends, academicTrend
       children: [
         { id: 'future-trends', label: 'GitHub Top 5 项目分析' },
         { id: 'github-执行摘要', label: '执行摘要' },
-        { id: 'github-1-mem0-227k-stars', label: 'mem0 (22.7K stars)' },
-        { id: 'github-2-graphiti-227k-stars', label: 'graphiti (22.7K stars)' },
-        { id: 'github-3-letta-141k-stars', label: 'letta (14.1K stars)' },
-        { id: 'github-4-cognee-36k-stars', label: 'cognee (3.6K stars)' },
-        { id: 'github-5-supermemory-30k-stars', label: 'supermemory (3.0K stars)' },
+        { id: 'github-1-mem0-22-7k-stars', label: 'mem0 (22.7K stars)' },
+        { id: 'github-2-graphiti-22-7k-stars', label: 'graphiti (22.7K stars)' },
+        { id: 'github-3-letta-14-1k-stars', label: 'letta (14.1K stars)' },
+        { id: 'github-4-cognee-3-6k-stars', label: 'cognee (3.6K stars)' },
+        { id: 'github-5-supermemory-3-0k-stars', label: 'supermemory (3.0K stars)' },
         { id: 'github-跨项目趋势总结', label: '跨项目趋势总结' },
         { id: 'github-对华为云的影响分析', label: '对华为云的影响分析' },
       ]
