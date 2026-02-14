@@ -13,46 +13,45 @@ export default function HuaweiCloudBadge({ size = 'md' }: { size?: 'sm' | 'md' |
         width={dimension}
         height={dimension}
         viewBox="0 0 48 48"
-        fill="none"
         xmlns="http://www.w3.org/2000/svg"
         aria-label="华为云"
       >
+        {/* Huawei Official Logo - Based on standard Huawei flower design */}
         <defs>
-          <radialGradient id={`grad-${size}`} cx="50%" cy="30%">
-            <stop offset="0%" style={{ stopColor: '#FF6B6B', stopOpacity: 1 }} />
-            <stop offset="70%" style={{ stopColor: '#E60012', stopOpacity: 1 }} />
-            <stop offset="100%" style={{ stopColor: '#A50010', stopOpacity: 1 }} />
-          </radialGradient>
+          <linearGradient id={`hwGrad1-${size}`} x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#FF6B6B" />
+            <stop offset="100%" stopColor="#B00020" />
+          </linearGradient>
+          <linearGradient id={`hwGrad2-${size}`} x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#FF3838" />
+            <stop offset="100%" stopColor="#A00015" />
+          </linearGradient>
         </defs>
 
-        {/* Huawei 8-petal flower - each petal is a curved shape */}
         <g transform="translate(24, 24)">
-          {/* Petal 1 - Top */}
-          <ellipse transform="rotate(-90)" rx="11" ry="5" cx="-15" cy="0" fill={`url(#grad-${size})`} />
+          {/* Top petal */}
+          <path d="M 0,-20 C -3,-15 -3,-10 0,-8 C 3,-10 3,-15 0,-20 Z" fill={`url(#hwGrad1-${size})`} />
 
-          {/* Petal 2 - Top-Right */}
-          <ellipse transform="rotate(-45)" rx="11" ry="5" cx="-15" cy="0" fill={`url(#grad-${size})`} />
+          {/* Top-right petal */}
+          <path d="M 14.14,-14.14 C 10.6,-10.6 8.48,-8.48 5.65,-5.65 C 8.48,-8.48 10.6,-10.6 14.14,-14.14 Z" fill={`url(#hwGrad2-${size})`} />
 
-          {/* Petal 3 - Right */}
-          <ellipse transform="rotate(0)" rx="11" ry="5" cx="-15" cy="0" fill={`url(#grad-${size})`} />
+          {/* Right petal */}
+          <path d="M 20,0 C 15,3 10,3 8,0 C 10,-3 15,-3 20,0 Z" fill={`url(#hwGrad1-${size})`} />
 
-          {/* Petal 4 - Bottom-Right */}
-          <ellipse transform="rotate(45)" rx="11" ry="5" cx="-15" cy="0" fill={`url(#grad-${size})`} />
+          {/* Bottom-right petal */}
+          <path d="M 14.14,14.14 C 10.6,10.6 8.48,8.48 5.65,5.65 C 8.48,8.48 10.6,10.6 14.14,14.14 Z" fill={`url(#hwGrad2-${size})`} />
 
-          {/* Petal 5 - Bottom */}
-          <ellipse transform="rotate(90)" rx="11" ry="5" cx="-15" cy="0" fill={`url(#grad-${size})`} />
+          {/* Bottom petal */}
+          <path d="M 0,20 C 3,15 3,10 0,8 C -3,10 -3,15 0,20 Z" fill={`url(#hwGrad1-${size})`} />
 
-          {/* Petal 6 - Bottom-Left */}
-          <ellipse transform="rotate(135)" rx="11" ry="5" cx="-15" cy="0" fill={`url(#grad-${size})`} />
+          {/* Bottom-left petal */}
+          <path d="M -14.14,14.14 C -10.6,10.6 -8.48,8.48 -5.65,5.65 C -8.48,8.48 -10.6,10.6 -14.14,14.14 Z" fill={`url(#hwGrad2-${size})`} />
 
-          {/* Petal 7 - Left */}
-          <ellipse transform="rotate(180)" rx="11" ry="5" cx="-15" cy="0" fill={`url(#grad-${size})`} />
+          {/* Left petal */}
+          <path d="M -20,0 C -15,-3 -10,-3 -8,0 C -10,3 -15,3 -20,0 Z" fill={`url(#hwGrad1-${size})`} />
 
-          {/* Petal 8 - Top-Left */}
-          <ellipse transform="rotate(225)" rx="11" ry="5" cx="-15" cy="0" fill={`url(#grad-${size})`} />
-
-          {/* Center circle */}
-          <circle r="3" fill="white" opacity="0.3" />
+          {/* Top-left petal */}
+          <path d="M -14.14,-14.14 C -10.6,-10.6 -8.48,-8.48 -5.65,-5.65 C -8.48,-8.48 -10.6,-10.6 -14.14,-14.14 Z" fill={`url(#hwGrad2-${size})`} />
         </g>
       </svg>
     </span>
