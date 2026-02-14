@@ -12,18 +12,48 @@ export default function HuaweiCloudBadge({ size = 'md' }: { size?: 'sm' | 'md' |
       <svg
         width={dimension}
         height={dimension}
-        viewBox="0 0 24 24"
+        viewBox="0 0 48 48"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         aria-label="华为云"
       >
-        {/* Huawei flower logo - simplified 8-petal design */}
-        <circle cx="12" cy="12" r="11" fill="#C8102E" />
-        <path
-          d="M12 4L13.5 8.5L17 6.5L15 10L19 10.5L15.5 12.5L18 16L14 14.5L13 19L11 14.5L7 16L9.5 12.5L5 10.5L9 10L7 6.5L10.5 8.5L12 4Z"
-          fill="white"
-          opacity="0.95"
-        />
+        <defs>
+          <radialGradient id={`grad-${size}`} cx="50%" cy="30%">
+            <stop offset="0%" style={{ stopColor: '#FF6B6B', stopOpacity: 1 }} />
+            <stop offset="70%" style={{ stopColor: '#E60012', stopOpacity: 1 }} />
+            <stop offset="100%" style={{ stopColor: '#A50010', stopOpacity: 1 }} />
+          </radialGradient>
+        </defs>
+
+        {/* Huawei 8-petal flower - each petal is a curved shape */}
+        <g transform="translate(24, 24)">
+          {/* Petal 1 - Top */}
+          <ellipse transform="rotate(-90)" rx="11" ry="5" cx="-15" cy="0" fill={`url(#grad-${size})`} />
+
+          {/* Petal 2 - Top-Right */}
+          <ellipse transform="rotate(-45)" rx="11" ry="5" cx="-15" cy="0" fill={`url(#grad-${size})`} />
+
+          {/* Petal 3 - Right */}
+          <ellipse transform="rotate(0)" rx="11" ry="5" cx="-15" cy="0" fill={`url(#grad-${size})`} />
+
+          {/* Petal 4 - Bottom-Right */}
+          <ellipse transform="rotate(45)" rx="11" ry="5" cx="-15" cy="0" fill={`url(#grad-${size})`} />
+
+          {/* Petal 5 - Bottom */}
+          <ellipse transform="rotate(90)" rx="11" ry="5" cx="-15" cy="0" fill={`url(#grad-${size})`} />
+
+          {/* Petal 6 - Bottom-Left */}
+          <ellipse transform="rotate(135)" rx="11" ry="5" cx="-15" cy="0" fill={`url(#grad-${size})`} />
+
+          {/* Petal 7 - Left */}
+          <ellipse transform="rotate(180)" rx="11" ry="5" cx="-15" cy="0" fill={`url(#grad-${size})`} />
+
+          {/* Petal 8 - Top-Left */}
+          <ellipse transform="rotate(225)" rx="11" ry="5" cx="-15" cy="0" fill={`url(#grad-${size})`} />
+
+          {/* Center circle */}
+          <circle r="3" fill="white" opacity="0.3" />
+        </g>
       </svg>
     </span>
   );
