@@ -50,11 +50,11 @@ export default function SummaryPageClient({ summary, githubTrends, academicTrend
       children: [
         { id: 'future-trends', label: 'GitHub Top 5 项目分析' },
         { id: 'github-执行摘要', label: '执行摘要' },
-        { id: 'github-1-mem0-227k-stars', label: '1. mem0 (22.7K stars)' },
-        { id: 'github-2-graphiti-227k-stars', label: '2. graphiti (22.7K stars)' },
-        { id: 'github-3-letta-141k-stars', label: '3. letta (14.1K stars)' },
-        { id: 'github-4-cognee-36k-stars', label: '4. cognee (3.6K stars)' },
-        { id: 'github-5-supermemory-30k-stars', label: '5. supermemory (3.0K stars)' },
+        { id: 'github-1-mem0-227k-stars', label: 'mem0 (22.7K stars)' },
+        { id: 'github-2-graphiti-227k-stars', label: 'graphiti (22.7K stars)' },
+        { id: 'github-3-letta-141k-stars', label: 'letta (14.1K stars)' },
+        { id: 'github-4-cognee-36k-stars', label: 'cognee (3.6K stars)' },
+        { id: 'github-5-supermemory-30k-stars', label: 'supermemory (3.0K stars)' },
         { id: 'github-跨项目趋势总结', label: '跨项目趋势总结' },
         { id: 'github-对华为云的影响分析', label: '对华为云的影响分析' },
       ]
@@ -65,10 +65,10 @@ export default function SummaryPageClient({ summary, githubTrends, academicTrend
       children: [
         { id: 'academic', label: '学术前沿研究' },
         { id: 'academic-执行摘要', label: '执行摘要' },
-        { id: 'academic-第一部分-现有论文创新总结', label: '第一部分：现有论文创新总结' },
-        { id: 'academic-第二部分-最新论文趋势-2024-2025', label: '第二部分：最新论文趋势（2024-2025）' },
-        { id: 'academic-第三部分-对云服务需求的预测', label: '第三部分：对云服务需求的预测' },
-        { id: 'academic-第四部分-华为云的准备建议', label: '第四部分：华为云的准备建议' },
+        { id: 'academic-第一部分-现有论文创新总结', label: '现有论文创新总结' },
+        { id: 'academic-第二部分-最新论文趋势-2024-2025', label: '最新论文趋势（2024-2025）' },
+        { id: 'academic-第三部分-对云服务需求的预测', label: '对云服务需求的预测' },
+        { id: 'academic-第四部分-华为云的准备建议', label: '华为云的准备建议' },
       ]
     },
     {
