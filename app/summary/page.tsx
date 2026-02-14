@@ -8,8 +8,8 @@ export default function SummaryPage() {
   const summary = JSON.parse(fs.readFileSync(summaryPath, 'utf-8'));
 
   // 读取markdown文件
-  const githubTrendsPath = path.join(process.cwd(), '../analysis/github-future-trends.md');
-  const academicTrendsPath = path.join(process.cwd(), '../analysis/academic-innovation-trends.md');
+  const githubTrendsPath = path.join(process.cwd(), 'data/analysis/github-future-trends.md');
+  const academicTrendsPath = path.join(process.cwd(), 'data/analysis/academic-innovation-trends.md');
 
   const githubTrendsMarkdown = fs.readFileSync(githubTrendsPath, 'utf-8');
   const academicTrendsMarkdown = fs.readFileSync(academicTrendsPath, 'utf-8');
