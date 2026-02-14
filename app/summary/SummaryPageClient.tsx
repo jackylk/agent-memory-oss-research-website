@@ -205,7 +205,7 @@ export default function SummaryPageClient({ summary, githubTrends, academicTrend
         {/* 左侧目录导航 */}
         <aside className="hidden lg:block w-64 flex-shrink-0">
           <div className="sticky top-20">
-            <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-200">
+            <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 max-h-[calc(100vh-6rem)] overflow-y-auto">
               <h3 className="text-sm font-semibold text-gray-900 mb-3">目录导航</h3>
               <nav className="space-y-2">
                 {tocItems.map((chapter) => (
