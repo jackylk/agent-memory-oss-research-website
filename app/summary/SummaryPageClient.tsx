@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useState, useEffect, useRef } from 'react';
+import HuaweiCloudBadge from '@/components/HuaweiCloudBadge';
 
 interface SummaryPageProps {
   summary: any;
@@ -41,7 +42,7 @@ export default function SummaryPageClient({ summary, githubTrends, academicTrend
         { id: 'models-embedding', label: '  └ Embedding模型' },
         { id: 'deployment', label: '🚀 部署服务' },
         { id: 'other', label: '⚡ 其他需求' },
-        { id: 'huawei-summary', label: '🇨🇳 华为云总结' },
+        { id: 'huawei-summary', label: '华为云总结' },
       ]
     },
     {
@@ -282,7 +283,7 @@ export default function SummaryPageClient({ summary, githubTrends, academicTrend
               </div>
               <div className="mt-4 p-4 bg-yellow-50 rounded-lg border border-yellow-200">
                 <div className="font-medium text-gray-900 mb-1">
-                  🇨🇳 华为云支持：{summary.storage_services.vector_databases.huawei_cloud_support.service_name}
+                  <span className="inline-flex items-center gap-1.5"><HuaweiCloudBadge size="sm" /> 华为云支持：</span>{summary.storage_services.vector_databases.huawei_cloud_support.service_name}
                 </div>
                 <div className="text-sm text-gray-700 mb-2">
                   {summary.storage_services.vector_databases.huawei_cloud_support.notes}
@@ -309,7 +310,7 @@ export default function SummaryPageClient({ summary, githubTrends, academicTrend
               </div>
               <div className="mt-4 p-4 bg-red-50 rounded-lg border border-red-200">
                 <div className="font-medium text-gray-900 mb-1">
-                  🇨🇳 华为云支持：{summary.storage_services.graph_databases.huawei_cloud_support.service_name}
+                  <span className="inline-flex items-center gap-1.5"><HuaweiCloudBadge size="sm" /> 华为云支持：</span>{summary.storage_services.graph_databases.huawei_cloud_support.service_name}
                 </div>
                 <div className="text-sm text-gray-700 mb-2">
                   <span className="font-medium">替代方案：</span>
@@ -337,7 +338,7 @@ export default function SummaryPageClient({ summary, githubTrends, academicTrend
               </div>
               <div className="mt-4 p-4 bg-green-50 rounded-lg border border-green-200">
                 <div className="font-medium text-gray-900 mb-1">
-                  🇨🇳 华为云支持：{summary.storage_services.relational_databases.huawei_cloud_support.service_name}
+                  <span className="inline-flex items-center gap-1.5"><HuaweiCloudBadge size="sm" /> 华为云支持：</span>{summary.storage_services.relational_databases.huawei_cloud_support.service_name}
                 </div>
                 <div className="text-sm text-gray-700">
                   {summary.storage_services.relational_databases.huawei_cloud_support.notes}
@@ -372,7 +373,7 @@ export default function SummaryPageClient({ summary, githubTrends, academicTrend
               ))}
               <div className="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
                 <div className="font-medium text-gray-900 mb-1">
-                  🇨🇳 华为云支持：{summary.storage_services.kv_databases.huawei_cloud_support.service_name}
+                  <span className="inline-flex items-center gap-1.5"><HuaweiCloudBadge size="sm" /> 华为云支持：</span>{summary.storage_services.kv_databases.huawei_cloud_support.service_name}
                 </div>
                 <div className="text-sm text-gray-700">
                   {summary.storage_services.kv_databases.huawei_cloud_support.notes}
@@ -395,7 +396,7 @@ export default function SummaryPageClient({ summary, githubTrends, academicTrend
               </div>
               <div className="mt-4 p-4 bg-green-50 rounded-lg border border-green-200">
                 <div className="font-medium text-gray-900 mb-1">
-                  🇨🇳 华为云支持：{summary.storage_services.object_storage.huawei_cloud_support.service_name}
+                  <span className="inline-flex items-center gap-1.5"><HuaweiCloudBadge size="sm" /> 华为云支持：</span>{summary.storage_services.object_storage.huawei_cloud_support.service_name}
                   {summary.storage_services.object_storage.huawei_cloud_support.s3_compatible && (
                     <span className="ml-2 text-xs bg-green-600 text-white px-2 py-0.5 rounded">S3兼容</span>
                   )}
@@ -438,7 +439,7 @@ export default function SummaryPageClient({ summary, githubTrends, academicTrend
               </div>
               <div className="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
                 <div className="font-medium text-gray-900 mb-2">
-                  🇨🇳 华为云支持：{summary.model_services.llm_requirements.huawei_cloud_support.maas_service}
+                  <span className="inline-flex items-center gap-1.5"><HuaweiCloudBadge size="sm" /> 华为云支持：</span>{summary.model_services.llm_requirements.huawei_cloud_support.maas_service}
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                   <div>
@@ -480,7 +481,7 @@ export default function SummaryPageClient({ summary, githubTrends, academicTrend
               </div>
               <div className="mt-4 p-4 bg-purple-50 rounded-lg border border-purple-200">
                 <div className="font-medium text-gray-900 mb-1">
-                  🇨🇳 华为云支持：{summary.model_services.embedding_requirements.huawei_cloud_support.service_name}
+                  <span className="inline-flex items-center gap-1.5"><HuaweiCloudBadge size="sm" /> 华为云支持：</span>{summary.model_services.embedding_requirements.huawei_cloud_support.service_name}
                 </div>
                 <div className="text-sm text-gray-700 mb-2">
                   {summary.model_services.embedding_requirements.huawei_cloud_support.notes}
@@ -515,7 +516,7 @@ export default function SummaryPageClient({ summary, githubTrends, academicTrend
                 </div>
                 <div className="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-200 text-sm">
                   <div className="font-medium text-gray-900">
-                    🇨🇳 {summary.deployment_services.containerization.huawei_cloud_support.service_name}
+                    <span className="inline-flex items-center gap-1.5"><HuaweiCloudBadge size="sm" /> {summary.deployment_services.containerization.huawei_cloud_support.service_name}</span>
                   </div>
                   <div className="text-gray-700 mt-1">
                     {summary.deployment_services.containerization.huawei_cloud_support.notes}
@@ -542,7 +543,7 @@ export default function SummaryPageClient({ summary, githubTrends, academicTrend
                 </div>
                 <div className="mt-4 p-3 bg-green-50 rounded-lg border border-green-200 text-sm">
                   <div className="font-medium text-gray-900">
-                    🇨🇳 {summary.deployment_services.orchestration.huawei_cloud_support.service_name}
+                    <span className="inline-flex items-center gap-1.5"><HuaweiCloudBadge size="sm" /> {summary.deployment_services.orchestration.huawei_cloud_support.service_name}</span>
                   </div>
                   <div className="text-gray-700 mt-1">
                     {summary.deployment_services.orchestration.huawei_cloud_support.notes}
@@ -576,7 +577,7 @@ export default function SummaryPageClient({ summary, githubTrends, academicTrend
                 </div>
               </div>
               <div className="mt-4 p-4 bg-purple-50 rounded-lg border border-purple-200">
-                <div className="font-medium text-gray-900 mb-2">🇨🇳 华为云支持</div>
+                <div className="font-medium text-gray-900 mb-2 inline-flex items-center gap-1.5"><HuaweiCloudBadge size="sm" /> 华为云支持</div>
                 <div className="text-sm text-gray-700 space-y-1">
                   <div>• GPU实例: {summary.other_requirements.gpu_acceleration.huawei_cloud_support.gpu_instances}</div>
                   <div>• 昇腾NPU: {summary.other_requirements.gpu_acceleration.huawei_cloud_support.ascend_npu}</div>
@@ -589,7 +590,7 @@ export default function SummaryPageClient({ summary, githubTrends, academicTrend
           {/* ==================== 华为云整体支持总结 ==================== */}
           <section id="huawei-summary" className="scroll-mt-20 mb-12">
             <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-              <span>🇨🇳</span>
+              <HuaweiCloudBadge size="lg" />
               <span>华为云整体支持总结</span>
             </h3>
 

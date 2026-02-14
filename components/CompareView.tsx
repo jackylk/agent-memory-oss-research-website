@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import type { ProjectMeta } from '@/lib/data';
 import Link from 'next/link';
+import HuaweiCloudBadge from './HuaweiCloudBadge';
 
 interface CompareViewProps {
   projects: ProjectMeta[];
@@ -285,7 +286,10 @@ export default function CompareView({ projects }: CompareViewProps) {
                   {/* 华为云适配性 */}
                   <tr className="bg-red-50">
                     <td colSpan={selectedProjectsData.length + 1} className="px-4 py-2 text-sm font-semibold text-red-900">
-                      🇨🇳 华为云适配性
+                      <span className="inline-flex items-center gap-1.5">
+                        <HuaweiCloudBadge size="sm" />
+                        华为云适配性
+                      </span>
                     </td>
                   </tr>
                   <tr>

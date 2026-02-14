@@ -5,6 +5,7 @@ import fs from 'fs';
 import path from 'path';
 import { ExpandableSection } from '@/components/ExpandableSection';
 import { TableOfContents, type TocSection } from '@/components/TableOfContents';
+import HuaweiCloudBadge from '@/components/HuaweiCloudBadge';
 import type { Metadata } from 'next';
 
 export async function generateStaticParams() {
@@ -72,7 +73,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ name
     tocSections.push({ id: 'value-propositions', title: '华为式价值判断', icon: '💎' });
   }
 
-  tocSections.push({ id: 'cloud-needs-summary', title: '华为云适配性', icon: '🇨🇳' });
+  tocSections.push({ id: 'cloud-needs-summary', title: '华为云适配性', icon: '华' });
 
   if (project.paper?.exists) {
     tocSections.push({ id: 'paper', title: '学术论文', icon: '📄' });
@@ -243,7 +244,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ name
             {project.huawei_cloud && (
               <div id="cloud-needs-summary" className="bg-gradient-to-br from-red-50 to-orange-50 rounded-2xl shadow-lg p-8 mb-8 border-2 border-red-200">
                 <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-                  <span className="text-3xl">🇨🇳</span>
+                  <HuaweiCloudBadge size="lg" />
                   <span>华为云适配性</span>
                 </h2>
 
